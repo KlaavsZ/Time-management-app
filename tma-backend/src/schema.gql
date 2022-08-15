@@ -1,0 +1,113 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Event {
+  id: Int!
+  title: String!
+  start: DateTime!
+  end: DateTime!
+  user: User!
+  userId: Int!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Task {
+  id: Int!
+  name: String!
+  description: String
+  done: Boolean!
+  start: DateTime!
+  end: DateTime!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  userId: Int!
+  user: User!
+}
+
+type User {
+  id: Int!
+  email: String!
+  password: String!
+  username: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  tasks: [Task!]!
+  events: [Event!]!
+}
+
+type LoginResponse {
+  accessToken: String!
+  user: User!
+}
+
+type Query {
+  tasks: [Task!]!
+  getTask(id: Int!): Task!
+  getTasks(done: Boolean!): [Task!]!
+  getTaskByUser(userId: Int!, taskId: Int!): Task!
+  getTasksByUserId(done: Boolean!, userId: Int!): [Task!]!
+  getAllTasksByUserId(userId: Int!): [Task!]!
+  users: [User!]!
+  events: [Event!]!
+  getEvent(id: Int!): Event!
+  getEventByUser(userId: Int!, eventId: Int!): Event!
+  getAllEventsByUser(userId: Int!): [Event!]!
+}
+
+type Mutation {
+  createTask(input: CreateTaskInput!): Task!
+  updateTask(id: Int!, input: UpdateTaskInput!): Task!
+  deleteTask(id: Int!): Boolean!
+  setTaskDone(id: Int!, done: Boolean!): Task!
+  deleteUser(id: Int!): Boolean!
+  login(loginUserInput: LoginUserInput!): LoginResponse!
+  signup(createUserInput: CreateUserInput!): User!
+  createEvent(createEventInput: CreateEventInput!): Event!
+  updateEvent(id: Int!, updateEventInput: UpdateEventInput!): Event!
+  deleteEvent(id: Int!): Boolean!
+}
+
+input CreateTaskInput {
+  name: String!
+  description: String
+  start: DateTime!
+  end: DateTime!
+  userId: Int!
+}
+
+input UpdateTaskInput {
+  name: String!
+  description: String
+  done: Boolean!
+  start: DateTime!
+  end: DateTime!
+}
+
+input LoginUserInput {
+  username: String!
+  password: String!
+}
+
+input CreateUserInput {
+  email: String!
+  username: String!
+  password: String!
+}
+
+input CreateEventInput {
+  title: String!
+  start: DateTime!
+  end: DateTime!
+  userId: Int!
+}
+
+input UpdateEventInput {
+  title: String!
+  start: DateTime!
+  end: DateTime!
+}
